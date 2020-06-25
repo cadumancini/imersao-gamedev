@@ -1,25 +1,34 @@
 class Personagem extends Animacao{
   constructor (matriz, imagem, x, largura, altura, 
-    larguraSprite, alturaSprite) {
-    super (matriz, imagem, x, largura, altura, 
+    larguraSprite, alturaSprite, somPulo) {
+    super (matriz, imagem, x, (height - altura), largura, altura, 
       larguraSprite, alturaSprite);
 
     this.yBase = height - this.altura;
-    this.y = this.yBase;
+    //this.y = this.yBase;
     this.gravidade = 3;
     this.velocidadePulo = 0;
+    this.pulosMaximos = 2;
+    this.pulos = 0;
+    this.somPulo = somPulo;
   }
 
   pula() {
-    this.velocidadePulo = -30;
+    if(this.pulos + 1 <= this.pulosMaximos) {
+      this.velocidadePulo = -30;
+      this.pulos++;
+      this.somPulo.play();
+    }
   }
 
   aplicaGravidade() {
     this.y += this.velocidadePulo;
     this.velocidadePulo += this.gravidade;
 
-    if(this.y > this.yBase)
+    if(this.y > this.yBase) {
       this.y = this.yBase;
+      this.pulos = 0;
+    }
   }
 
   estaColidindo(inimigo) {
