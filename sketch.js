@@ -3,6 +3,7 @@ let imagemPersonagem;
 let imagemInimigo;
 let cenario;
 let somDoJogo;
+let somDoPulo;
 let personagem;
 let inimigo;
 
@@ -61,6 +62,7 @@ function preload() {
   imagemPersonagem = loadImage ('imagens/personagem/correndo.png');
   imagemInimigo = loadImage ('imagens/inimigos/gotinha.png');
   somDoJogo = loadSound('sons/trilha_jogo.mp3');
+  somDoPulo = loadSound('sons/somPulo.mp3');
 } 
 
 function setup() {
@@ -79,9 +81,21 @@ function draw() {
   cenario.move();
   
   personagem.exibe();
+  personagem.aplicaGravidade();
 
   inimigo.exibe();
   inimigo.move();
+
+  if(personagem.estaColidindo(inimigo)) {
+    noLoop();
+  }
+}
+
+function keyPressed() {
+  if(key === 'ArrowUp') {
+    personagem.pula();
+    somDoPulo.play();
+  }
 }
 
 function touchStarted() {
