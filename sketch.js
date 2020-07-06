@@ -6,16 +6,22 @@ let imagemBGDecor;
 let imagemMiddle;
 let imagemForeground;
 let imagemGround;
+let imagemTroll;
+let imagemVoador;
 let cenario;
 let somDoJogo;
 let somDoPulo;
 let somGameOver;
 let personagem;
-let inimigo;
-let dragao;
 
 const matrizInimigo = buildMatrix(7, 4, 105, 100);
 const matrizPersonagem = buildMatrix(4, 4, 220, 270);
+const matrizTroll = buildMatrix(6, 5, 400, 400);
+const matrizVoador = buildMatrix(6, 3, 200, 150);
+matrizTroll.length = 28; // desconsiderando 2 últimos elementos, pois não tem imagem.
+matrizVoador.length = 16; // desconsiderando 2 últimos elementos, pois não tem imagem.
+
+const inimigos = [];
 
 function buildMatrix(linhas, colunas, larguraSprite, alturaSprite) {
   var matrix = [];
@@ -34,6 +40,8 @@ function preload() {
   imagemPersonagem = loadImage ('imagens/personagem/correndo.png');
   imagemInimigo = loadImage ('imagens/inimigos/gotinha.png');
   imagemGameOver = loadImage ('imagens/assets/game-over.png');
+  imagemTroll = loadImage('imagens/inimigos/troll.png');
+  imagemVoador = loadImage('imagens/inimigos/gotinha-voadora.png');
   somDoJogo = loadSound('sons/trilha_jogo.mp3');
   somDoPulo = loadSound('sons/somPulo.mp3');
   somGameOver = loadSound('sons/game-over.mp3');
@@ -46,7 +54,10 @@ function setup() {
   cenario = new Cenario(imagemCeu, imagemBGDecor, imagemMiddle,
     imagemForeground, imagemGround, 5);
   personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270, somDoPulo);
-  inimigo = new Inimigo(matrizInimigo, imagemInimigo, width - 52, 30, 52, 52, 104, 104, 10);
+
+  inimigos.push(new Inimigo(matrizInimigo, imagemInimigo, 0, 30, 52, 52, 104, 104, 10, 400));
+  inimigos.push(new Inimigo(matrizTroll, imagemTroll, 0, 0, 200, 200, 400, 400, 15, 2000));
+  inimigos.push(new Inimigo(matrizVoador, imagemVoador, 0, 200, 100, 75, 200, 150, 10, 600));
   
   somDoJogo.loop();
 }
@@ -58,17 +69,22 @@ function draw() {
   personagem.exibe();
   personagem.aplicaGravidade();
 
-  inimigo.exibe();
-  inimigo.move();
+  inimigos.forEach(inimigo => {
+    inimigo.exibe();
+    inimigo.move();
+  });
 
   cenario.exibeGrama();
 
-  if(personagem.estaColidindo(inimigo)) {
-    image(imagemGameOver, (width / 2) - 206, (height / 2) - 39);
-    somDoJogo.stop();
-    somGameOver.play();
-    noLoop();
-  }
+  inimigos.forEach(inimigo => {
+    /* if(personagem.estaColidindo(inimigo)) {
+      image(imagemGameOver, (width / 2) - 206, (height / 2) - 39);
+      somDoJogo.stop();
+      somGameOver.play();
+      noLoop();
+    } */
+  });
+  
 }
 
 function keyPressed() {
