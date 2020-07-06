@@ -13,6 +13,7 @@ let somDoJogo;
 let somDoPulo;
 let somGameOver;
 let personagem;
+let pontuacao;
 
 const matrizInimigo = buildMatrix(7, 4, 105, 100);
 const matrizPersonagem = buildMatrix(4, 4, 220, 270);
@@ -51,6 +52,8 @@ function setup() {
   createCanvas(640, 480);
   frameRate(40);
 
+  pontuacao = new Pontuacao();
+
   cenario = new Cenario(imagemCeu, imagemBGDecor, imagemMiddle,
     imagemForeground, imagemGround, 5);
   personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270, somDoPulo);
@@ -75,6 +78,9 @@ function draw() {
   });
 
   cenario.exibeGrama();
+
+  pontuacao.exibe();
+  pontuacao.adicionaPontuacao();
 
   inimigos.forEach(inimigo => {
     /* if(personagem.estaColidindo(inimigo)) {
