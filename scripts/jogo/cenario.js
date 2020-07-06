@@ -37,8 +37,6 @@ class Cenario {
     image(this.imagemForeground, this.x1Foreground, 0, width, height);
     image(this.imagemForeground, this.x2Foreground, 0, width, height);
     
-    image(this.imagemGround, this.x1Grama, 0, width, height);
-    image(this.imagemGround, this.x2Grama, 0, width, height);
   }
   
   move() {
@@ -56,6 +54,11 @@ class Cenario {
     
     this.x1Grama = moveUm(this.x1Grama, this.velocidadeGrama);
     this.x2Grama = moveUm(this.x2Grama, this.velocidadeGrama);
+  }
+
+  exibeGrama() {
+    image(this.imagemGround, this.x1Grama, 0, width, height);
+    image(this.imagemGround, this.x2Grama, 0, width, height);
   }
 }
 
