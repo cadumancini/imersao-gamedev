@@ -15,74 +15,17 @@ let personagem;
 let inimigo;
 let dragao;
 
-const matrizInimigo = [
-  [0 , 0],
-  [105, 0],
-  [210, 0],
-  [315, 0],
-  [0, 100],
-  [105, 100],
-  [210, 100],
-  [315, 100],
-  [0, 200],
-  [105, 200],
-  [210, 200],
-  [315, 200],
-  [0, 300],
-  [105, 300],
-  [210, 300],
-  [315, 300],
-  [0, 400],
-  [105, 400],
-  [210, 400],
-  [315, 400],
-  [0, 500],
-  [105, 500],
-  [210, 500],
-  [315, 500],
-  [0, 600],
-  [105, 600],
-  [210, 600],
-  [315, 600],
-];
+const matrizInimigo = buildMatrix(7, 4, 105, 100);
+const matrizPersonagem = buildMatrix(4, 4, 220, 270);
+const matrizDragao = buildMatrix(4, 4, 205, 161);
 
-const matrizPersonagem = [
-  [0, 0], 
-  [220, 0], 
-  [440, 0], 
-  [660, 0], 
-  [0, 270], 
-  [220, 270], 
-  [440, 270], 
-  [660, 270], 
-  [0, 540], 
-  [220, 540], 
-  [440, 540], 
-  [660, 540], 
-  [0, 810], 
-  [220, 810], 
-  [440, 810], 
-  [660, 810]
-];
-
-const matrizDragao = [
-  [0, 0],
-  [0, 0],
-  [0, 0],
-  [0, 0],
-  [0, 161],
-  [205, 161],
-  [410, 161],
-  [615, 161],
-  [0, 322],
-  [205, 322],
-  [410, 322],
-  [615, 322],
-  [0, 483],
-  [205, 483],
-  [410, 483],
-  [615, 483],
-];
+function buildMatrix(linhas, colunas, larguraSprite, alturaSprite) {
+  var matrix = [];
+  for(var y = 0; y < linhas; y++)
+    for(var x = 0; x < colunas; x++)
+      matrix.push([x * larguraSprite, y * alturaSprite]);
+  return matrix;
+}
 
 function preload() {
   imagemCeu = loadImage('imagens/cenario/Sky.png');
@@ -105,9 +48,9 @@ function setup() {
 
   cenario = new Cenario(imagemCeu, imagemBGDecor, imagemMiddle,
     imagemForeground, imagemGround, 5);
-  personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 110, 135, 220, 270, somDoPulo);
-  inimigo = new Inimigo(matrizInimigo, imagemInimigo, width - 52, 52, 52, 104, 104, 10);
-  dragao = new Dragao(matrizDragao, imagemDragao, width*3, 307, 242, 205, 161, 10);
+  personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270, somDoPulo);
+  inimigo = new Inimigo(matrizInimigo, imagemInimigo, width - 52, 30, 52, 52, 104, 104, 10);
+  dragao = new Dragao(matrizDragao, imagemDragao, width*3, 250, 307, 242, 205, 161, 10);
   
   somDoJogo.loop();
 }
@@ -124,6 +67,8 @@ function draw() {
 
   dragao.exibe();
   dragao.move();
+
+  cenario.exibeGrama();
 
   if(personagem.estaColidindo(inimigo)) {
     image(imagemGameOver, (width / 2) - 206, (height / 2) - 39);
