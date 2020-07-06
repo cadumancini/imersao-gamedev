@@ -6,7 +6,6 @@ let imagemBGDecor;
 let imagemMiddle;
 let imagemForeground;
 let imagemGround;
-let imagemDragao;
 let cenario;
 let somDoJogo;
 let somDoPulo;
@@ -17,7 +16,6 @@ let dragao;
 
 const matrizInimigo = buildMatrix(7, 4, 105, 100);
 const matrizPersonagem = buildMatrix(4, 4, 220, 270);
-const matrizDragao = buildMatrix(4, 4, 205, 161);
 
 function buildMatrix(linhas, colunas, larguraSprite, alturaSprite) {
   var matrix = [];
@@ -36,7 +34,6 @@ function preload() {
   imagemPersonagem = loadImage ('imagens/personagem/correndo.png');
   imagemInimigo = loadImage ('imagens/inimigos/gotinha.png');
   imagemGameOver = loadImage ('imagens/assets/game-over.png');
-  imagemDragao = loadImage ('imagens/outros/reddragonfly.png');
   somDoJogo = loadSound('sons/trilha_jogo.mp3');
   somDoPulo = loadSound('sons/somPulo.mp3');
   somGameOver = loadSound('sons/game-over.mp3');
@@ -50,7 +47,6 @@ function setup() {
     imagemForeground, imagemGround, 5);
   personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270, somDoPulo);
   inimigo = new Inimigo(matrizInimigo, imagemInimigo, width - 52, 30, 52, 52, 104, 104, 10);
-  dragao = new Dragao(matrizDragao, imagemDragao, width*3, 250, 307, 242, 205, 161, 10);
   
   somDoJogo.loop();
 }
@@ -64,9 +60,6 @@ function draw() {
 
   inimigo.exibe();
   inimigo.move();
-
-  dragao.exibe();
-  dragao.move();
 
   cenario.exibeGrama();
 
