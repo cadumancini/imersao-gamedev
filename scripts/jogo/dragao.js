@@ -1,7 +1,7 @@
 class Dragao extends Animacao {
-  constructor (matriz, imagem, x, largura, altura, 
+  constructor (matriz, imagem, x, variacaoY, largura, altura, 
     larguraSprite, alturaSprite, velocidade) {
-    super (matriz, imagem, x, height - 400, largura, altura, 
+    super (matriz, imagem, x, variacaoY, largura, altura, 
       larguraSprite, alturaSprite);
     this.velocidade = velocidade;
   }
